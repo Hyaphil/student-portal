@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">SP</div>
+        <span class="brand-name">Student Portal</span>
+      </div>
+
+      <nav class="nav">
+        <a href="#dashboard" class="nav-link" data-page="dashboard">
+          <span class="nav-icon">🏠</span><span>Dashboard</span>
+        </a>
+        <a href="#schedule" class="nav-link" data-page="schedule">
+          <span class="nav-icon">📅</span><span>Class Schedule</span>
+        </a>
+        <a href="#grades" class="nav-link" data-page="grades">
+          <span class="nav-icon">📊</span><span>Grades</span>
+        </a>
+        <a href="#announcements" class="nav-link" data-page="announcements">
+          <span class="nav-icon">📢</span><span>Announcements</span>
+          <span class="badge" id="unreadBadge"></span>
+        </a>
+        <a href="#profile" class="nav-link" data-page="profile">
+          <span class="nav-icon">👤</span><span>Student Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <span id="themeIcon">🌙</span><span id="themeLabel">Dark Mode</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+        <div>
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+          <p class="page-subtitle" id="todayDate"></p>
+        </div>
+        <div class="topbar-user">
+          <div class="avatar small" id="topAvatar"></div>
+          <div class="topbar-user-info">
+            <strong id="topName"></strong>
+            <small id="topId"></small>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- Dashboard -->
+        <section class="page" id="page-dashboard">
+          <div class="welcome-card">
+            <div>
+              <h2 id="welcomeText">Welcome back!</h2>
+              <p>Here's what's happening with your studies today.</p>
+            </div>
+            <div class="welcome-emoji">🎓</div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon purple">📈</div>
+              <div><p class="stat-label">Current GPA</p><h3 class="stat-value" id="statGpa">-</h3></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon blue">📚</div>
+              <div><p class="stat-label">Enrolled Courses</p><h3 class="stat-value" id="statCourses">-</h3></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green">✅</div>
+              <div><p class="stat-label">Attendance</p><h3 class="stat-value" id="statAttendance">-</h3></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon orange">🏅</div>
+              <div><p class="stat-label">Units Earned</p><h3 class="stat-value" id="statUnits">-</h3></div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <h3>Today's Classes</h3>
+                <a href="#schedule" class="link">View all →</a>
+              </div>
+              <ul class="today-list" id="todayClasses"></ul>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>Latest Announcements</h3>
+                <a href="#announcements" class="link">View all →</a>
+              </div>
+              <ul class="mini-announcements" id="dashAnnouncements"></ul>
+            </div>
+
+            <div class="card span-2">
+              <div class="card-header">
+                <h3>Course Performance</h3>
+                <a href="#grades" class="link">View grades →</a>
+              </div>
+              <div class="bar-chart" id="dashChart"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Schedule -->
+        <section class="page" id="page-schedule">
+          <div class="card">
+            <div class="card-header">
+              <h3>Weekly Timetable</h3>
+              <div class="tabs" id="dayTabs"></div>
+            </div>
+            <div class="schedule-list" id="scheduleList"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3>Full Week Overview</h3></div>
+            <div class="table-wrap">
+              <table class="table" id="weekTable"></table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Grades -->
+        <section class="page" id="page-grades">
+          <div class="grades-summary">
+            <div class="gpa-ring-card card">
+              <div class="gpa-ring" id="gpaRing">
+                <div class="gpa-ring-inner">
+                  <span id="gpaRingValue">-</span>
+                  <small>GPA</small>
+                </div>
+              </div>
+              <p class="muted" id="gpaStanding"></p>
+            </div>
+            <div class="card grow">
+              <div class="card-header">
+                <h3>Semester Grades</h3>
+                <select id="semesterSelect" class="select"></select>
+              </div>
+              <div class="table-wrap">
+                <table class="table" id="gradesTable"></table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Announcements -->
+        <section class="page" id="page-announcements">
+          <div class="card">
+            <div class="card-header">
+              <h3>All Announcements</h3>
+              <div class="filters">
+                <input type="search" id="annSearch" class="input" placeholder="Search announcements..." />
+                <select id="annFilter" class="select">
+                  <option value="all">All categories</option>
+                  <option value="Academic">Academic</option>
+                  <option value="Event">Event</option>
+                  <option value="Finance">Finance</option>
+                  <option value="General">General</option>
+                </select>
+              </div>
+            </div>
+            <div class="announcements" id="announcementList"></div>
+          </div>
+        </section>
+
+        <!-- Profile -->
+        <section class="page" id="page-profile">
+          <div class="profile-grid">
+            <div class="card profile-card">
+              <div class="profile-cover"></div>
+              <div class="avatar large" id="profileAvatar"></div>
+              <h2 id="profileName"></h2>
+              <p class="muted" id="profileProgram"></p>
+              <span class="pill" id="profileStatus"></span>
+              <div class="profile-meta">
+                <div><strong id="profileYear"></strong><small>Year Level</small></div>
+                <div><strong id="profileGpa"></strong><small>GPA</small></div>
+                <div><strong id="profileUnits"></strong><small>Units</small></div>
+              </div>
+            </div>
+
+            <div class="card grow">
+              <div class="card-header">
+                <h3>Personal Information</h3>
+                <button class="btn" id="editProfileBtn">Edit Profile</button>
+              </div>
+              <form id="profileForm" class="info-grid"></form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
